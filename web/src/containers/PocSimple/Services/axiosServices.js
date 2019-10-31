@@ -3,16 +3,17 @@ import axios from 'axios';
 class AxiosService {
   constructor(){
     const instance = axios.create();
-    instance.interceptors.response.use(handleSuccess, handleError);
+
+    const errorHandler = (error) => {
+      return Promise.reject({ ...error })
+    }
+    
+    const successHandler = (response) => {
+      return response
+    }
+
+    instance.interceptors.response.use(response=>successHandler(response), (err)=>errorHandler(err));
     this.instance = instance;
-  }
-
-  handleSuccess(response){
-    return response;
-  }
-
-  handleError(error){
-    return Promise.reject(error)
   }
 
   get(url){

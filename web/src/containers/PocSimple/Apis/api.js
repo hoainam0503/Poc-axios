@@ -1,5 +1,5 @@
 import axiosService from '../Services/axiosServices';
- const url = "";
-export const getList = () => {
-  return axiosService.get(url)
+//  const url = "../data.json";
+export const getList = (url) => {
+  return axiosService.get(url);
 }

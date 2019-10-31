@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
-import Data from './data';
+// import Data from './data.json';
+import {connect} from 'react-redux';
+import * as selector from './state//selector';
+import { getListData } from './state/action';
+
 
 class ShowData extends Component {
+componentDidMount() {
+  this.props.loadData()
+}
+
+  
   render() {
+    console.log("Here ",this.props.list.list);
+    
     return (
       <div>
          <table className="table">
@@ -14,7 +25,7 @@ class ShowData extends Component {
             </tr>
           </thead>
           <tbody>
-            {Data.map((value, key) => {
+            {this.props.list.list.map((value, key) => {
               return(
                 <tr key={key}>
                 <td >{value.key}</td>
@@ -22,14 +33,23 @@ class ShowData extends Component {
                 <td >{value.summary}</td>
               </tr>
               );
-
             })}
-
           </tbody>
         </table>
       </div>
     );
   }
 }
-
-export default ShowData;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    list: selector.selectList(state)
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadData: () => {
+      dispatch(getListData())
+    }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ShowData);

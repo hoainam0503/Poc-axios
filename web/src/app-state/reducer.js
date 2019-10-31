@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   auth: reducer,
   loadingBar: loadingBarReducer,
   // jiraIssue: JiraIssueReducer,
-  pocreducer: PocReducer
+  list: PocReducer
 });
 
 export default rootReducer;
